@@ -8,5 +8,6 @@ namespace VAK.Lib
 {
     public class Class1
     {
+		private string test;
     }
 }

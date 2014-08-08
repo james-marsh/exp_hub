@@ -8,20 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAK.Lib", "VAK.Lib\VAK.Lib.csproj", "{1A86B06F-9FC4-4974-AC14-FC8BE1A5EE05}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = VAK.Tests\\VAK.Tests.csproj
-		SccProjectName1 = VAK.Tests
-		SccLocalPath1 = VAK.Tests
-		SccProjectUniqueName2 = VAK\\VAK.csproj
-		SccProjectName2 = VAK
-		SccLocalPath2 = VAK
-		SccProjectUniqueName3 = VAK.Lib\\VAK.Lib.csproj
-		SccProjectName3 = VAK.Lib
-		SccLocalPath3 = VAK.Lib
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
