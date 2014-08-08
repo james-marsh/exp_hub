@@ -276,3 +276,18 @@ body {
     padding-bottom: 5px;
     text-align: center;
 }
+
+@media screen and (max-device-width: 480px){
+    /*--- iPhone only CSS here ---*/
+    .header-text {
+	font-size: 1em;
+	padding-top: 25px;
+	padding-right: 50px;
+	-moz-transition: width 1s ease-in-out, left 1.5s ease-in-out;
+    -webkit-transition: width 1s ease-in-out, left 1.5s ease-in-out;
+    -moz-transition: width 1s ease-in-out, left 1.5s ease-in-out;
+    -o-transition: width 1s ease-in-out, left 1.5s ease-in-out;
+    transition: width 1s ease-in-out, left 1.5s ease-in-out;
+	margin-bottom: 45px;
+}
+}
