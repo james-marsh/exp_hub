@@ -1,6 +1,26 @@
 ﻿<div id="main-todo-board">
     <div class="todo-container-header">
         <div class="header-text-2">//todo</div>
+    </div>
+    <div class="todo-body" ng-app="ToDoTest">
+        <div class="todo-main" ng-controller="ToDoCtrl">
+            <form name="form" class="todo-input" ng-submit="addTodo()">
+                <input class="todo-input-textbox" type="text" name="newTodo" ng-model="newTodo" required />
+                <div class="todo-controls">
+                    <button class="todo-submit-button" ng-disabled="form.$invalid">Add new todo</button>
+                    <button class="todo-submit-button" ng-click="clearCompleted()">clear todones</button>
+                </div>
+            </form>
 
+            <ul class="todo-list" ng-repeat="todo in todos">
+                <li>
+                    <input type="checkbox" ng-model="todo.done" />
+                    <span ng-class="{'done': todo.done}">{{todo.title}}</span>
+
+                </li>
+            </ul>
+            <br />
+            <div class="todo-remaining-count">{{todoRemaining()}} of {{todos.length}} left</div>
+        </div>
     </div>
 </div>
