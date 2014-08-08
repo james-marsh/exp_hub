@@ -1,0 +1,5 @@
+C:\Users\Vu\Source\Workspaces\vak\VAK\VAK.Lib\bin\Debug\VAK.Lib.dll
+C:\Users\Vu\Source\Workspaces\vak\VAK\VAK.Lib\bin\Debug\VAK.Lib.pdb
+C:\Users\Vu\Source\Workspaces\vak\VAK\VAK.Lib\obj\Debug\VAK.Lib.csprojResolveAssemblyReference.cache
+C:\Users\Vu\Source\Workspaces\vak\VAK\VAK.Lib\obj\Debug\VAK.Lib.dll
+C:\Users\Vu\Source\Workspaces\vak\VAK\VAK.Lib\obj\Debug\VAK.Lib.pdb

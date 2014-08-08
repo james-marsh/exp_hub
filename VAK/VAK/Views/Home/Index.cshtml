@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "//explosion_hub";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.returnUrl = "Home";
+}
+
+<script type="text/javascript">
+    (function () {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/client:plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+</script>
+
+<div id="wrapper">
+    <div id="main-container">
+        @{Html.RenderPartial("~/Views/Shared/_Header.cshtml");}
+
+        <script type="text/javascript">function signinCallback(authResult) {
+    if (authResult['status']['signed_in']) {
+        document.getElementById('signinButton').setAttribute('style', 'display: none');
+        console.log('signed in');
+    } else {
+        // Possible error values:
+        //   "user_signed_out" - User is signed-out
+        //   "access_denied" - User denied access to your app
+        //   "immediate_failed" - Could not automatically log in the user
+        console.log('Sign-in state: ' + authResult['error']);
+    }
+}</script>
+
+
+        <div class="container-body">
+            <div id="signinButton">
+                <span
+                    class="g-signin"
+                    data-callback="signinCallback"
+                    data-clientid="783269936623-6rce36sp0auaiikn1bfpv7dm68gh6hl4.apps.googleusercontent.com"
+                    data-cookiepolicy="single_host_origin"
+                    data-scope="profile"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
