@@ -1,4 +1,5 @@
 ﻿@using EXPLOSION_HUB.Models;
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Manage Account";
 }
@@ -8,7 +9,14 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-12">
-        @(ViewBag.HasLocalPassword ? Html.Partial("_ChangePasswordPartial") : Html.Partial("_SetPasswordPartial"))
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
 
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
