@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 using EXPLOSION_HUB.Models;
 
-namespace EXPLOSION_HUB
+namespace EXPLOSION_HUB.App_Start
 {
-    public partial class Startup
+    public class Startup
     {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
-        public void ConfigureAuth(IAppBuilder app)
+        public static void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
@@ -50,8 +48,8 @@ namespace EXPLOSION_HUB
 			   appId: "286988141489227",
 			   appSecret: "c58da4ae644c3beac6b3fd66cb50530a");
 
-			app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-			{
+			app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
+			    {
 				ClientId = "889854502067-15rn1m116mpj9da7aobevrt9am0s3v6t.apps.googleusercontent.com",
 				ClientSecret = "wYR7raCVRCpS-VWVeQaZFleZ"
 			});
