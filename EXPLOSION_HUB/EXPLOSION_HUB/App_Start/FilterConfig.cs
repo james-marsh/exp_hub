@@ -1,6 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 
-namespace EXPLOSION_HUB.App_Start
+namespace EXPLOSION_HUB
 {
 	public class FilterConfig
 	{

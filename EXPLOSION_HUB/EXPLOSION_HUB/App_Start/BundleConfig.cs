@@ -1,6 +1,7 @@
-﻿using System.Web.Optimization;
+﻿using System.Web;
+using System.Web.Optimization;
 
-namespace EXPLOSION_HUB.App_Start
+namespace EXPLOSION_HUB
 {
 	public class BundleConfig
 	{

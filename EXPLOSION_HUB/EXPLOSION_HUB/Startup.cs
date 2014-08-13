@@ -1,15 +1,14 @@
-﻿using EXPLOSION_HUB.App_Start;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Startup))]
+[assembly: OwinStartupAttribute(typeof(EXPLOSION_HUB.Startup))]
 namespace EXPLOSION_HUB
 {
-    public class Startup
+    public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            App_Start.Startup.ConfigureAuth(app);
+            ConfigureAuth(app);
         }
     }
 }
