@@ -14,20 +14,25 @@ using System.Data;
 
 namespace EXPLOSION_HUB.Server.Repository
 {
-    public class GenericRepository<TEntity, VDbContext> : IGenericRepository<TEntity>
+    public class GenericRepository<TEntity, VDbContext> : IGenericRepository<TEntity, VDbContext>
         where TEntity : class
         where VDbContext : DbContext
     {
         private VDbContext dbContext = null;
         private DbSet<TEntity> dbSet = null;
 
-        public VDbContext Context { 
-			set { 
+        public VDbContext Context 
+		{ 
+			set 
+			{ 
 					this.dbContext = value; 
 			} 
 		}
-        public DbSet<TEntity> DbSet { 
-			set { 
+
+        public DbSet<TEntity> DbSet 
+		{ 
+			set 
+			{ 
 					this.dbSet = value; 
 			} 
 		} 
