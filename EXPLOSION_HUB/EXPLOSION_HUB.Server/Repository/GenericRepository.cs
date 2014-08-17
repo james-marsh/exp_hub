@@ -14,28 +14,26 @@ using System.Data;
 
 namespace EXPLOSION_HUB.Server.Repository
 {
-    public class GenericRepository<TEntity, VDbContext> : IGenericRepository<TEntity, VDbContext>
+    public class GenericRepository<TEntity, VDbContext> : IGenericRepository<TEntity, VDbContext>, IDisposable
         where TEntity : class
-        where VDbContext : DbContext
+        where VDbContext : DbContext, new()
     {
         private VDbContext dbContext = null;
         private DbSet<TEntity> dbSet = null;
 
-        public VDbContext Context 
-		{ 
-			set 
-			{ 
-					this.dbContext = value; 
-			} 
+		private bool isDisposed = false;
+
+		public GenericRepository()
+		{
+			this.dbContext = new VDbContext();
+			this.dbSet = this.dbContext.Set<TEntity>();
 		}
 
-        public DbSet<TEntity> DbSet 
-		{ 
-			set 
-			{ 
-					this.dbSet = value; 
-			} 
-		} 
+		public GenericRepository(VDbContext dbContext)
+		{
+			this.dbContext = dbContext;
+			this.dbSet = this.dbContext.Set<TEntity>();
+		}
 
         private void Filter(ref IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter = null)
         {
@@ -161,25 +159,32 @@ namespace EXPLOSION_HUB.Server.Repository
             dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
-        {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
-        }
-
-        public virtual void Delete(TEntity entityToDelete)
-        {
-            if (this.dbContext.Entry(entityToDelete).State == EntityState.Detached)
-            {   
-                dbSet.Attach(entityToDelete);
-            }
-            dbSet.Remove(entityToDelete);
-        }
-
         public virtual void Update(TEntity entityToUpdate)
         {  
             dbSet.Attach(entityToUpdate);
             this.dbContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
-    }
+
+		public virtual int Save()
+		{
+			return this.dbContext.SaveChanges();
+		}
+
+		
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(!isDisposed && disposing)
+			{
+				this.dbContext.Dispose();
+			}
+
+			isDisposed = true;
+		}
+	}
 }

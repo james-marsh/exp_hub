@@ -9,16 +9,8 @@ namespace EXPLOSION_HUB.Server.Repository
 {
 	public interface IGenericRepository<TEntity, VDbContext>
 		where TEntity : class
-		where VDbContext : DbContext
+		where VDbContext : DbContext, new()
     {
-		VDbContext Context
-		{
-			set;
-		}
-		DbSet<TEntity> DbSet
-		{
-			set;
-		}
 
         IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
@@ -43,11 +35,9 @@ namespace EXPLOSION_HUB.Server.Repository
         TEntity GetByID(object id);
 
         void Insert(TEntity entity);
+		
+        void Update(TEntity entity);
 
-        void Delete(object id);
-
-        void Delete(TEntity entityToDelete);
-
-        void Update(TEntity entityToUpdate);
+		int Save();
     }
 }
