@@ -7,9 +7,9 @@ using System.Data.Entity;
 
 namespace EXPLOSION_HUB.Server.Repository
 {
-	public interface IGenericRepository<TEntity, VDbContext>
+	public interface IGenericRepository<TEntity, TDbContext>
 		where TEntity : class
-		where VDbContext : DbContext, new()
+		where TDbContext : DbContext, new()
     {
 
         IEnumerable<TEntity> Get(
@@ -17,22 +17,11 @@ namespace EXPLOSION_HUB.Server.Repository
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
 
-        IEnumerable<TEntity> Get(
-            string orderByColumn, string direction,
-            Expression<Func<TEntity, bool>> filter = null,
-            string includeProperties = "");
+        IEnumerable<TEntity> GetPaged(PageProperty pageProperty,
+			Expression<Func<TEntity, bool>> filter = null,
+			string includeProperties = "");
 
-        IEnumerable<TEntity> GetPaged(int page, int rows, out int totalPages, out int totalRecords,
-                                                     string orderByColumn, string direction,
-                                                     Expression<Func<TEntity, bool>> filter = null,
-                                                     string includeProperties = "");
-
-        IEnumerable<TEntity> GetPaged(int page, int rows,
-                                        string orderByColumn, string direction,
-                                        Expression<Func<TEntity, bool>> filter = null,
-                                        string includeProperties = "");
-
-        TEntity GetByID(object id);
+        TEntity GetById(object id);
 
         void Insert(TEntity entity);
 		

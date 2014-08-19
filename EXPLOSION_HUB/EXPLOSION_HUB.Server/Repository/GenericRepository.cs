@@ -35,13 +35,13 @@ namespace EXPLOSION_HUB.Server.Repository
 			this.dbSet = this.dbContext.Set<TEntity>();
 		}
 
-        private void Filter(ref IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter = null)
+        private void Filter(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> filter = null)
         {
             if (filter != null)
                 query = query.Where(filter);
         }
 
-        private void IncludeProperties(ref IQueryable<TEntity> query, string includeProperties = "")
+        private void IncludeProperties(IQueryable<TEntity> query, string includeProperties = "")
         {
             foreach (var includeProperty in includeProperties.Split
                 (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -83,18 +83,11 @@ namespace EXPLOSION_HUB.Server.Repository
             return query.Provider.CreateQuery<TEntity>(resultExp);
         }
 
-        private IQueryable<TEntity> PagedData(IQueryable<TEntity> query, int page, int row, out int totalPages, out int totalRecords)
+        private IEnumerable<TEntity> PagedData(IQueryable<TEntity> query, PageProperty pageProperty)
         {
-            totalPages = 0;
-            totalRecords = 0;
-			totalRecords = query.Count();
-			totalPages = (int)Math.Ceiling(totalRecords / (float)row);
-            return query.Skip((page - 1) * row).Take(row);
-        }
-
-        private IQueryable<TEntity> PagedData(IQueryable<TEntity> query, int page, int row)
-        {   
-            return query.Skip((page - 1) * row).Take(row);
+	        pageProperty.TotalRecords = query.Count();
+			pageProperty.TotalPages = (int)Math.Ceiling(pageProperty.TotalRecords / (float)pageProperty.Rows);
+			return query.Skip((pageProperty.Page - 1) * pageProperty.Rows).Take(pageProperty.Rows);
         }
 
         public virtual IEnumerable<TEntity> Get(
@@ -104,52 +97,25 @@ namespace EXPLOSION_HUB.Server.Repository
         {
             IQueryable<TEntity> query = dbSet;
 
-            Filter(ref query, filter);
+            Filter(query, filter);
 
-            IncludeProperties(ref query, includeProperties);
+            IncludeProperties(query, includeProperties);
 
             return OrderBy(query, orderBy);
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            string orderByColumn, string direction,
-            Expression<Func<TEntity, bool>> filter = null,
-            string includeProperties = "")
-        {
-            IQueryable<TEntity> query = dbSet;
-
-            Filter(ref query, filter);
-
-            IncludeProperties(ref query, includeProperties);
-
-            return OrderBy(query, orderByColumn, direction);
-        }
-
-        public virtual IEnumerable<TEntity> GetPaged(int page, int rows, out int totalPages, out int totalRecords,
-                                                     string orderByColumn, string direction,
+        public virtual IEnumerable<TEntity> GetPaged(PageProperty pageProperty,
                                                      Expression<Func<TEntity, bool>> filter = null,
                                                      string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
-            Filter(ref query, filter);
-            IncludeProperties(ref query, includeProperties);
-            var orderedData = OrderBy(query, orderByColumn, direction);
-            return PagedData(orderedData, page, rows, out totalPages, out totalRecords);
+            Filter(query, filter);
+            IncludeProperties(query, includeProperties);
+			var orderedData = OrderBy(query, pageProperty.OrderByColumn, pageProperty.SortDirection);
+			return PagedData(orderedData, pageProperty);
         }
 
-        public virtual IEnumerable<TEntity> GetPaged(int page, int rows,
-                                                     string orderByColumn, string direction,
-                                                     Expression<Func<TEntity, bool>> filter = null,
-                                                     string includeProperties = "")
-        {
-            IQueryable<TEntity> query = dbSet;
-            Filter(ref query, filter);
-            IncludeProperties(ref query, includeProperties);
-            var orderedData = OrderBy(query, orderByColumn, direction);
-            return PagedData(orderedData, page, rows);
-        }
-
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);
         }

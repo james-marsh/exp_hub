@@ -14,6 +14,10 @@ namespace EXPLOSION_HUB.Server
 
 		public int TotalPages { get; set; }
 
-		public int Records { get; set; }
+		public int TotalRecords { get; set; }
+
+		public string OrderByColumn { get; set; }
+
+		public string SortDirection { get; set; }
 	}
 }
