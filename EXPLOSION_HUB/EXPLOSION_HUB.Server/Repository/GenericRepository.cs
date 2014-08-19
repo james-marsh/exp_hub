@@ -1,35 +1,28 @@
 ﻿//This repository implementation has basic CRUD functionalities.
-//Repository is not responsible of disposing the DbContext. Its the Service which has this responsibility.
-//Update: 7/28/2013: Actually based on design of DbContext, developer dont have to worry about disposing it.
-//DbContext handles the opening and closing of connection. It closes the connection as its finished retrieving the results from query.
-//But it is still good practice to call Dispose.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
 using System.Data.Entity;
 using System.Linq.Expressions;
-using System.Data;
 
 namespace EXPLOSION_HUB.Server.Repository
 {
-    public class GenericRepository<TEntity, VDbContext> : IGenericRepository<TEntity, VDbContext>, IDisposable
+    public class GenericRepository<TEntity, TDbContext> : IGenericRepository<TEntity>, IDisposable
         where TEntity : class
-        where VDbContext : DbContext, new()
+        where TDbContext : DbContext, new()
     {
-        private VDbContext dbContext = null;
+        private TDbContext dbContext = null;
         private DbSet<TEntity> dbSet = null;
 
 		private bool isDisposed = false;
 
 		public GenericRepository()
 		{
-			this.dbContext = new VDbContext();
+			this.dbContext = new TDbContext();
 			this.dbSet = this.dbContext.Set<TEntity>();
 		}
 
-		public GenericRepository(VDbContext dbContext)
+		public GenericRepository(TDbContext dbContext)
 		{
 			this.dbContext = dbContext;
 			this.dbSet = this.dbContext.Set<TEntity>();
@@ -104,7 +97,10 @@ namespace EXPLOSION_HUB.Server.Repository
             return OrderBy(query, orderBy);
         }
 
-        public virtual IEnumerable<TEntity> GetPaged(PageProperty pageProperty,
+        /// <summary>
+        /// To be used when paging is involved.
+        /// </summary>
+		public virtual IEnumerable<TEntity> GetPaged(PageProperty pageProperty,
                                                      Expression<Func<TEntity, bool>> filter = null,
                                                      string includeProperties = "")
         {
